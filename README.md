@@ -2,9 +2,16 @@
 
 A library for handling encryption and decryption of WebSocket data (and later HTTP) from an Uqbar node.
 
+## Installation
+
+`npm install @uqbar/client-encryptor-api`
+or
+`yarn add @uqbar/client-encryptor-api`
+
 ## How to use
 
 Import and instantiate the UqbarEncryptorApi:
+
 
 ```
 import UqbarEncryptorApi from '@uqbar/client-encryptor'
