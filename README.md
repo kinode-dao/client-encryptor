@@ -1,4 +1,4 @@
-# client-encryptor
+# client-encryptor-api
 
 A library for handling encryption and decryption of WebSocket data (and later HTTP) from an Uqbar node.
 
