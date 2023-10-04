@@ -22,5 +22,5 @@
     // "sourceMap": true,
     // "emitDeclarationOnly": true,
   },
-  "include": ["src/index.ts"]
+  "include": ["index.ts"]
 }
