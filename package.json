@@ -1,6 +1,6 @@
 {
   "name": "@uqbar/client-encryptor-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Client-side library for handling encryption and decryption from an Uqbar node",
   "main": "index.js",
   "types": "index.d.ts",
