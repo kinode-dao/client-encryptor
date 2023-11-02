@@ -63,8 +63,8 @@ export default class UqbarEncryptorApi {
     nodeId: string,
     channelId: string,
     uri?: string,
-    onMessage?: (data: any, encryptor: UqbarEncryptorApi) => void, // eslint-disable-line
-    onOpen?: (ev: Event) => void,
+    onMessage?: (data: any, api: UqbarEncryptorApi) => void, // eslint-disable-line
+    onOpen?: (ev: Event, api: UqbarEncryptorApi) => void,
     onClose?: (ev: CloseEvent) => void,
     onError?: (ev: Event) => void,
     onEncryptionReady?: (api: UqbarEncryptorApi) => void,
@@ -102,7 +102,7 @@ export default class UqbarEncryptorApi {
         }
       }))
 
-      onOpen(ev)
+      onOpen(ev, this)
     }
     this._ws.onclose = onClose
     this._ws.onerror = onError
