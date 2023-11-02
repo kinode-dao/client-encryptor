@@ -63,7 +63,7 @@ export default class UqbarEncryptorApi {
     nodeId: string,
     channelId: string,
     uri?: string,
-    onMessage?: (data: any) => void, // eslint-disable-line
+    onMessage?: (data: any, encryptor: UqbarEncryptorApi) => void, // eslint-disable-line
     onOpen?: (ev: Event) => void,
     onClose?: (ev: CloseEvent) => void,
     onError?: (ev: Event) => void,
@@ -76,19 +76,19 @@ export default class UqbarEncryptorApi {
     this._ws.onmessage = async (ev: MessageEvent<string | Blob>) => { // eslint-disable-line
       // figure out if it's encrypted, if it is, decrypt it and then pass to onMessage
       if (typeof ev.data === 'string') {
-        onMessage(ev.data)
+        onMessage(ev.data, this)
       } else if (ev.data instanceof Blob) {
         const encrypted = await blobToUint8Array(ev.data)
         const decrypted: any = this._decrypt(encrypted) // eslint-disable-line
         if (decrypted === null) {
           console.log('Unable to decrypt message, passing through as-is')
           const string = new TextDecoder().decode(encrypted);
-          onMessage(string)
+          onMessage(string, this)
         } else {
-          onMessage(decrypted)
+          onMessage(decrypted, this)
         }
       } else {
-        onMessage(ev.data)
+        onMessage(ev.data, this)
       }
     }
     this._ws.onopen = (ev: Event) => {
