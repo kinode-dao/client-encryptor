@@ -1,6 +1,16 @@
 import forge from 'node-forge'
 import { Buffer } from 'buffer'
 
+interface ProcessId {
+  process_name: string,
+  package_name: string,
+  publisher_node: string,
+}
+
+const processToString = (process: ProcessId): string => {
+  return `${process.process_name}@${process.package_name}:${process.publisher_node}`
+}
+
 const genFetchRoute = (route: string) => (window.location.pathname.includes('/http_proxy:http_proxy:uqbar/serve/') ?
 `/http_proxy:http_proxy:uqbar/serve/${window.location.pathname.split('/')[3]}/${route}`: route).replace('//', '/')
 
@@ -38,12 +48,13 @@ interface SendParams {
   data: any // eslint-disable-line
   channelId?: string
   encrypted?: boolean
-  target?: { node: string, process: string | number }
+  target?: { node: string, process: ProcessId }
 }
 
 export default class UqbarEncryptorApi {
   // 1. Generate a keypair
   nodeId: string;
+  processId: ProcessId;
   channelId: string;
   _secret: string | undefined;
   _cipher: forge.cipher.BlockCipher | undefined; // eslint-disable-line
@@ -52,6 +63,7 @@ export default class UqbarEncryptorApi {
 
   constructor({
     nodeId,
+    processId,
     channelId,
     uri = 'ws://' + window.location.host,
     onMessage = () => null,
@@ -61,7 +73,8 @@ export default class UqbarEncryptorApi {
     onEncryptionReady = () => null,
   }: {
     nodeId: string,
-    channelId: string,
+    processId: ProcessId,
+    channelId?: string,
     uri?: string,
     onMessage?: (data: any, api: UqbarEncryptorApi) => void, // eslint-disable-line
     onOpen?: (ev: Event, api: UqbarEncryptorApi) => void,
@@ -70,7 +83,8 @@ export default class UqbarEncryptorApi {
     onEncryptionReady?: (api: UqbarEncryptorApi) => void,
   }) {
     this._secret = undefined;
-    this.channelId = channelId;
+    this.processId = processId;
+    this.channelId = channelId || processToString(processId);
     this.nodeId = nodeId;
     this._ws = new WebSocket(uri)
     this._ws.onmessage = async (ev: MessageEvent<string | Blob>) => { // eslint-disable-line
@@ -189,7 +203,7 @@ export default class UqbarEncryptorApi {
 
     return this._decipher.output.toString() as string // eslint-disable-line
   }
-  send = ({ data, channelId = this.channelId, encrypted = true, target = { node: this.nodeId, process: this.channelId } }: SendParams) => {
+  send = ({ data, channelId = this.channelId, encrypted = true, target = { node: this.nodeId, process: this.processId } }: SendParams) => {
     const auth_token = getCookie(`uqbar-auth_${this.nodeId}`) // eslint-disable-line
     const ws_auth_token = getCookie(`uqbar-ws-auth_${this.nodeId}`) // eslint-disable-line
 
@@ -200,10 +214,7 @@ export default class UqbarEncryptorApi {
           auth_token,
           ws_auth_token,
           channel_id: channelId,
-          target: {
-            node: target.node,
-            process: typeof target.process === 'number' ? { Id: target.process } : { Name: target.process }
-          },
+          target,
           ...this._encrypt(JSON.stringify(data))
         }
       }))
