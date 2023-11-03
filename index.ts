@@ -8,7 +8,7 @@ interface ProcessId {
 }
 
 const processToString = (process: ProcessId): string => {
-  return `${process.process_name}@${process.package_name}:${process.publisher_node}`
+  return `${process.process_name}:${process.package_name}:${process.publisher_node}`
 }
 
 const genFetchRoute = (route: string) => (window.location.pathname.includes('/http_proxy:http_proxy:uqbar/serve/') ?
