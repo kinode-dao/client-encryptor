@@ -67,7 +67,7 @@ export default class UqbarEncryptorApi {
     nodeId,
     processId,
     channelId,
-    uri = 'ws://' + window.location.host,
+    uri = `ws://${window.location.host}/${processId}/`,
     onMessage = () => null,
     onOpen = () => null,
     onClose = () => null,
