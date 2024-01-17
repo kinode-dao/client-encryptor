@@ -110,10 +110,10 @@ export default class UqbarEncryptorApi {
     }
     this._ws.onopen = (ev: Event) => {
       // Register this API instance with the server
-      console.log(`${nodeId}`, getCookie(`uqbar-auth_${nodeId}`),getCookie(`uqbar-ws-auth_${nodeId}`))
+      console.log(`${nodeId}`, getCookie(`kinode-auth_${nodeId}`),getCookie(`kinode-ws-auth_${nodeId}`))
       this._ws.send(stringifyAndEncode({
-          auth_token: getCookie(`uqbar-auth_${nodeId}`),
-          // ws_auth_token: getCookie(`uqbar-ws-auth_${nodeId}`),
+          auth_token: getCookie(`kinode-auth_${nodeId}`),
+          // ws_auth_token: getCookie(`kinode-ws-auth_${nodeId}`),
           // channel_id: channelId,
           target_process: processId,
           encrypted: false,
@@ -128,7 +128,7 @@ export default class UqbarEncryptorApi {
 
     // const publicKeyHex = keypair.publicKey.n.toString(16) // eslint-disable-line
 
-    // fetch(genFetchRoute('/encryptor:sys:uqbar'), {
+    // fetch(genFetchRoute('/encryptor:sys:kinode'), {
     //   method: 'POST',
     //   body: JSON.stringify({
     //     channel_id: channelId,
@@ -136,7 +136,7 @@ export default class UqbarEncryptorApi {
     //   })
     // }).then(r => r.json()).then((json: { encrypted_secret: string, signed_public_key: string }) => {
     //   const { encrypted_secret, signed_public_key } = json
-    //   fetch(`/qns_indexer:qns_indexer:uqbar/node/${this.nodeId}`).then(r => r.json()).then((pqi: any) => { // eslint-disable-line
+    //   fetch(`/qns_indexer:qns_indexer:kinode/node/${this.nodeId}`).then(r => r.json()).then((pqi: any) => { // eslint-disable-line
     //     const { public_key } = pqi
     //     console.log(this.nodeId)
     //     console.log('Got public key from QNS:', public_key)
@@ -208,8 +208,8 @@ export default class UqbarEncryptorApi {
   //   return this._decipher.output.toString() as string // eslint-disable-line
   }
   send = ({ data }: SendParams) => {
-    const auth_token = getCookie(`uqbar-auth_${this.nodeId}`) // eslint-disable-line
-    const ws_auth_token = getCookie(`uqbar-ws-auth_${this.nodeId}`) // eslint-disable-line
+    const auth_token = getCookie(`kinode-auth_${this.nodeId}`) // eslint-disable-line
+    const ws_auth_token = getCookie(`kinode-ws-auth_${this.nodeId}`) // eslint-disable-line
 
     // if (encrypted) {
     //   if (!this._cipher) return console.error('No cipher, unable to encrypt')
