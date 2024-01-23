@@ -1,7 +1,7 @@
 {
-  "name": "@uqbar/client-encryptor-api",
-  "version": "0.2.4",
-  "description": "Client-side library for handling encryption and decryption from an Uqbar node",
+  "name": "@kinode/client-api",
+  "version": "0.1.0",
+  "description": "Client-side library for handling websockets, encryption, and decryption from an Uqbar node",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {

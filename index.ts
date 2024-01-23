@@ -110,14 +110,10 @@ export default class UqbarEncryptorApi {
     }
     this._ws.onopen = (ev: Event) => {
       // Register this API instance with the server
-      console.log(`${nodeId}`, getCookie(`kinode-auth_${nodeId}`),getCookie(`kinode-ws-auth_${nodeId}`))
-      this._ws.send(stringifyAndEncode({
-          auth_token: getCookie(`kinode-auth_${nodeId}`),
-          // ws_auth_token: getCookie(`kinode-ws-auth_${nodeId}`),
-          // channel_id: channelId,
-          target_process: processId,
-          encrypted: false,
-      }))
+      // this._ws.send(stringifyAndEncode({
+      //     auth_token: getCookie(`kinode-auth_${nodeId}`),
+      //     encrypted: false,
+      // }))
       onOpen(ev, this)
     }
     this._ws.onclose = onClose
